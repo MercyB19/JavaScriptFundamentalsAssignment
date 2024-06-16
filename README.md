@@ -1,0 +1,1 @@
+This project contains a script that with gather data, process it and output consistent results based on specifications. It includes concepts like error handling, loop utilization, creating functions for resuable code, control flow, using arrays and objects.
