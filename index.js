@@ -78,8 +78,8 @@ const CourseInfo = {
   
   function getLearnerData(course, ag, submissions) {
     // Validate the course and assignment group
-    if (ag.course_id == course.id) {
-      throw new Error('Assignment group ${ag.id} does not belong to course ${course.id}');
+    if (ag.course_id != course.id) {
+      throw new Error(`Assignment group ${ag.id} does not belong to course ${course.id}`);
     }
 
     // Helper function to check if a date is in the past
@@ -116,12 +116,12 @@ const CourseInfo = {
       }
 
       // Deduct points for late submission
-      let effectiveScore = new Data(sumbitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
+      let effectiveScore = new Date(sumbitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
 
       // Update leaner data
-      leanersData[leaner_id].totalScore += effectiveScore;
-      leanersData[leaner_id].totalPossible += assignment.points_possible;
-      leanersData[leaner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
+      learnersData[leaner_id].totalScore += effectiveScore;
+      learnersData[leaner_id].totalPossible += assignment.points_possible;
+      learnersData[leaner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
     });
 
     // Format the final result
@@ -134,9 +134,10 @@ const CourseInfo = {
         ...learner.assignments
       });
     }
+
+    return result;
   }
 
-  return result;
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
