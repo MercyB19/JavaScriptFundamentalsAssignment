@@ -77,10 +77,60 @@ const CourseInfo = {
   ];
   
   function getLearnerData(course, ag, submissions) {
-    //Validate the course and assignment group
+    // Validate the course and assignment group
     if (ag.course_id == course.id) {
       throw new Error('Assignment group ${ag.id} does not belong to course ${course.id}')
     }
+
+    // Helper function to check if a date is in the past
+    function isPastDue(dateStr) {
+      return new Date(dateStr) < new Date();
+    }
+
+    // Prepare data for processing
+    let learnersData = {};
+
+    // Process each leaner submission
+    submissions.forEach(submission => {
+      const { learner_id, assignment_id, submission: { submitted_at, score } } = submission;
+
+    // Find the assignment
+      let assignment = ag.submission.find(a => a.id === assignment_id);
+      if (!assignment) {
+        throw new Error('Assignment ${assignment_id} not found');
+      }
+
+      // Check if the assignment is due
+      if (!isPastDue(assignment.due_at)) {
+        return; // skip not yet due assignments
+      }
+
+      // Initialize leaner data if not already done
+      if (!learnersData[learner_id]) {
+        learnersData[learner_id] = {
+          id: learner_id,
+          totalScore: 0,
+          totalPossible: 0,
+          assignments: {}
+        };
+      }
+
+
+
+
+
+
+
+    )
+
+
+    
+
+
+
+
+
+
     const result = [
       {
         id: 125,
