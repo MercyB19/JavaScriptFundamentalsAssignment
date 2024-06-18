@@ -116,7 +116,7 @@ const CourseInfo = {
       }
 
       // Deduct points for late submission
-      let effectiveScore = new Date(sumbitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
+      let effectiveScore = new Date(submitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
 
       // Update leaner data
       learnersData[leaner_id].totalScore += effectiveScore;
