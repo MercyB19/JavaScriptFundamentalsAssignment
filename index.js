@@ -119,9 +119,9 @@ const CourseInfo = {
       let effectiveScore = new Date(submitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
 
       // Update leaner data
-      learnersData[leaner_id].totalScore += effectiveScore;
-      learnersData[leaner_id].totalPossible += assignment.points_possible;
-      learnersData[leaner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
+      learnersData[learner_id].totalScore += effectiveScore;
+      learnersData[learner_id].totalPossible += assignment.points_possible;
+      learnersData[learner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
     });
 
     // Format the final result
