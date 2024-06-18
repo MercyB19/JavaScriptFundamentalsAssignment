@@ -79,7 +79,7 @@ const CourseInfo = {
   function getLearnerData(course, ag, submissions) {
     // Validate the course and assignment group
     if (ag.course_id == course.id) {
-      throw new Error('Assignment group ${ag.id} does not belong to course ${course.id}')
+      throw new Error('Assignment group ${ag.id} does not belong to course ${course.id}');
     }
 
     // Helper function to check if a date is in the past
@@ -95,7 +95,7 @@ const CourseInfo = {
       const { learner_id, assignment_id, submission: { submitted_at, score } } = submission;
 
     // Find the assignment
-      let assignment = ag.submission.find(a => a.id === assignment_id);
+      let assignment = ag.assignments.find(a => a.id === assignment_id);
       if (!assignment) {
         throw new Error('Assignment ${assignment_id} not found');
       }
@@ -123,10 +123,20 @@ const CourseInfo = {
       leanersData[leaner_id].totalPossible += assignment.points_possible;
       leanersData[leaner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
     });
+
+    // Format the final result
+    let result = [];
+    for (let learner_id in learnersData) {
+      let learner = learnersData[learner_id];
+      result.push({
+        id: learner.id,
+        avg: (learner.totalScore / learner.totalPossible) * 100,
+        ...learner.assignments
+      });
+    }
   }
 
   return result;
-}
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
@@ -135,20 +145,20 @@ console.log(result);
  
     
 
-    const result = [
-      {
-        id: 125,
-        avg: 0.985, // (47 + 150) / (50 + 150)
-        1: 0.94, // 47 / 50
-        2: 1.0, // 150 / 150
-      },
-      {
-        id: 132,
-        avg: 0.82, // (39 + 125) / (50 + 150)
-        1: 0.78, // 39 / 50
-        2: 0.833, // late: (140 - 15) / 150
-      },
-    ];
+    // const result = [
+    //   {
+    //     id: 125,
+    //     avg: 0.985, // (47 + 150) / (50 + 150)
+    //     1: 0.94, // 47 / 50
+    //     2: 1.0, // 150 / 150
+    //   },
+    //   {
+    //     id: 132,
+    //     avg: 0.82, // (39 + 125) / (50 + 150)
+    //     1: 0.78, // 39 / 50
+    //     2: 0.833, // late: (140 - 15) / 150
+    //   },
+    // ];
   
    
   
