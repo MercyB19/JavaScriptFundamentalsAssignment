@@ -77,10 +77,11 @@ const CourseInfo = {
   ];
   
   function getLearnerData(course, ag, submissions) {
-    // Validate the course and assignment group
-    if (ag.course_id != course.id) {
-      throw new Error(`Assignment group ${ag.id} does not belong to course ${course.id}`);
-    }
+    try {
+      // Validate the course and assignment group
+      if (ag.course_id != course.id) {
+        throw new Error(`Assignment group ${ag.id} does not belong to course ${course.id}`);
+      }
 
     // Helper function to check if a date is in the past
     function isPastDue(dateStr) {
@@ -136,30 +137,16 @@ const CourseInfo = {
     }
 
     return result;
+  } catch (error) {
+    console.error("Error processing learner data:", error.message);
   }
-
+}
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log(result);
 
  
-    
 
-    // const result = [
-    //   {
-    //     id: 125,
-    //     avg: 0.985, // (47 + 150) / (50 + 150)
-    //     1: 0.94, // 47 / 50
-    //     2: 1.0, // 150 / 150
-    //   },
-    //   {
-    //     id: 132,
-    //     avg: 0.82, // (39 + 125) / (50 + 150)
-    //     1: 0.78, // 39 / 50
-    //     2: 0.833, // late: (140 - 15) / 150
-    //   },
-    // ];
-  
    
   
