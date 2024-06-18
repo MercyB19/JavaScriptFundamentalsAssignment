@@ -115,21 +115,25 @@ const CourseInfo = {
         };
       }
 
+      // Deduct points for late submission
+      let effectiveScore = new Data(sumbitted_at) > new Date(assignment.due_at) ? score * 0.9 : score;
 
+      // Update leaner data
+      leanersData[leaner_id].totalScore += effectiveScore;
+      leanersData[leaner_id].totalPossible += assignment.points_possible;
+      leanersData[leaner_id].assignments[assignment_id] = (effectiveScore / assignment.points_possible) * 100;
+    });
+  }
 
+  return result;
+}
 
+const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
+console.log(result);
 
-
-    )
-
-
+ 
     
-
-
-
-
-
 
     const result = [
       {
@@ -146,10 +150,5 @@ const CourseInfo = {
       },
     ];
   
-    return result;
-  }
-  
-  const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-  
-  console.log(result);
+   
   
