@@ -77,7 +77,10 @@ const CourseInfo = {
   ];
   
   function getLearnerData(course, ag, submissions) {
-    // here, we would process this data to achieve the desired result.
+    //Validate the course and assignment group
+    if (ag.course_id == course.id) {
+      throw new Error('Assignment group ${ag.id} does not belong to course ${course.id}')
+    }
     const result = [
       {
         id: 125,
